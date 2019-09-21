@@ -1,0 +1,4 @@
+.Axis-Bottom text {
+    transform: rotate(-45deg);
+    text-anchor: end;
+  }
