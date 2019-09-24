@@ -1,0 +1,8 @@
+.Axis-Bottom text {
+    transform: rotate(-45deg);
+    text-anchor: end;
+  }
+
+  line {
+    color: rgba(128, 128, 128, 0.452);
+  }

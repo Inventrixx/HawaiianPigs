@@ -1,0 +1,18 @@
+.main-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap
+}
+
+.title {
+    text-align: center;
+    font-weight: 800;
+    font-size: 2em;
+    width: 100%;
+}
+
+.playPause-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
