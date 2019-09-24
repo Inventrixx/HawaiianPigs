@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import BarChart from './components/Chart/BarChart'
+import Main from './components/pages/Main'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import "./App.css";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-       <BarChart />
-      </div>
+      <Router>
+        <Route path='/:paused?:year?' component={Main} />
+      </Router>
     );
   }
 }
