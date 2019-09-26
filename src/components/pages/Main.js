@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import BarChart from '../BarChart/BarChart'
 import pigData from '../../wild-pig-data.json'
 import ProgressBar from '../ProgressBar/ProgressBar'
-import {validateYear, arrYearFiltered} from '../helpers'
+import {validateYear, arrYearFiltered, roundNumbers} from '../helpers'
 import * as queryString from 'query-string'
 import './styles/styles.css'
 
@@ -23,17 +23,29 @@ class Main extends Component {
         const minYear = Math.min(...arrYearFiltered(this.data))
         const maxYear = Math.max(...arrYearFiltered(this.data))
 
-        const howManyYears = arrYearFiltered.length
+        const howManyYears = (arrYearFiltered(this.data).length)
 
-        const progressPercent = (100/howManyYears) * 100
+        const percentPerYear = roundNumbers(100/howManyYears)
 
         this.state = {
             years: [],
             minYear: minYear,
             maxYear: maxYear,
-            progress: progressPercent
+            percentPerYear: percentPerYear,
+            progress: percentPerYear
         }
 
+    }
+
+    progressCalculator(selectedYear) {
+
+        const {minYear, percentPerYear, progress} = this.state
+        console.log(percentPerYear)
+        let howMuchProgress = selectedYear - minYear + 1
+
+        let howMuchProgressPercent = howMuchProgress * percentPerYear
+
+        return minYear < selectedYear ? howMuchProgressPercent : progress
     }
 
 
@@ -44,7 +56,16 @@ class Main extends Component {
         const {paused, year} = queryString.parse(this.props.location.search)
         const isPaused = paused ? paused === 'true' : false
         const yearsFiltered = arrYearFiltered(data)
-        this.setState({isPaused, selectedYear: validateYear(year, minYear), years: yearsFiltered})
+        const selectedYear = validateYear(year, minYear)
+        const progress = this.progressCalculator(selectedYear)
+        console.log(progress)
+
+        this.setState({
+            isPaused, 
+            selectedYear: validateYear(year, minYear), 
+            years: yearsFiltered,
+            progress: progress
+        })
     }
 
     componentDidMount() {
@@ -60,15 +81,16 @@ class Main extends Component {
     stopGraphic = () => clearInterval(progressBarChart)
 
     changeSelectedYear = () => {
-       const {selectedYear, years, minYear, maxYear} = this.state
+       const {selectedYear, years, minYear, maxYear, progress, percentPerYear} = this.state
  
        const indexSelectedYear = years.indexOf(selectedYear) 
 
 
        if(selectedYear < maxYear) {
-           this.setState({selectedYear: years[indexSelectedYear + ADD_ONE_YEAR]}) 
+           this.setState({selectedYear: years[indexSelectedYear + ADD_ONE_YEAR], 
+                          progress: progress + percentPerYear}) 
         } else {
-            this.setState({selectedYear: minYear, isPaused: false})
+            this.setState({selectedYear: minYear, isPaused: false, progress: percentPerYear})
             this.stopGraphic()
         }
                           
@@ -86,7 +108,7 @@ class Main extends Component {
 
     render(){
         const {data} = this
-        const { isPaused, selectedYear} = this.state
+        const { isPaused, selectedYear, progress} = this.state
         const yearsTitleToString = String(selectedYear)
         return (
             <div>
@@ -101,7 +123,7 @@ class Main extends Component {
                     paused={isPaused}
                     year={selectedYear}
                 />
-                <ProgressBar className='progress-bar' variant='determinate' />
+                <ProgressBar progress={progress} variant='determinate' />
                 <div className='playPause-container'>
                     <button onClick={this.onClickPaused}>{!isPaused ? 'Play' : 'Pause'}</button>
                 </div>
