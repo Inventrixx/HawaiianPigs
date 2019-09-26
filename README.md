@@ -12,16 +12,16 @@ each separate year of data being shown as a separate frame of the animation.
 
 The chart should have these features:
 
-* [ ] Animation that steps through the data, displaying each year for 2 seconds
+* [X] Animation that steps through the data, displaying each year for 2 seconds
       before proceeding to the next year.
 
-* [ ] A progress bar that shows the currently displayed year's relationship to
+* [X] A progress bar that shows the currently displayed year's relationship to
       the other years in the dataset.
 
-* [ ] A play/pause button which enables and disables the animation, pausing on
+* [X] A play/pause button which enables and disables the animation, pausing on
       whichever year is currently being shown
 
-* [ ] Year and play/paused state are persisted as query parameters in the URL.
+* [X] Year and play/paused state are persisted as query parameters in the URL.
       For example, `http://localhost:3000/?paused=true&year=2002` should load
       the page with the animation already paused and the year set to 2002
 
