@@ -12,11 +12,11 @@ const styles = {
 
 class ProgressBar extends React.Component {
     render(){
-        const {variant, className} = this.props
+        const {progress} = this.props
         return (
         <LinearProgress
             color="primary"
-            value={20}
+            value={progress}
             variant="determinate"
             className={styles.bar}
          />
