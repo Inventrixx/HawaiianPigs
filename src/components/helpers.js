@@ -15,3 +15,5 @@ export const validateYear = (year, minYear) => {
     const yearParam = parseInt(year, 10) // using radix parameter to specify which numeral system to be used 
     return yearParam && yearParam >= minYear ? yearParam : minYear
 }
+
+export const roundNumbers = number => Math.round(number*100)/100
