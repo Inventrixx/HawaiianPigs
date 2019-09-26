@@ -3,17 +3,14 @@ import { scaleLinear } from 'd3-scale'
 import { interpolateLab } from 'd3-interpolate'
 
 class Bars extends Component {
-
     constructor(props) {
         super(props)
 
-   
     this.colorScale = scaleLinear()
         .domain([0, 14000])
         
-        .range(['#F3E5F5', '#7B1FA2'])
+        .range(['#e3666c', '#ad2234'])
         .interpolate(interpolateLab)
-
     }
     render() {
         const {scales, data, margins, svgDimensions} = this.props
