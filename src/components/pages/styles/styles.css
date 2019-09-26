@@ -1,18 +1,19 @@
 .title {
     text-align: center;
-    font-weight: 800;
-    font-size: 2em;
-    width: 100%;
 }
 
-.progress-bar {
-    -ms-grid-column: 1;
-    -ms-grid-column-span: 2;
-    grid-column: 1 / 3;
+.title h1 {
+    padding: 20px;
 }
 
-.playPause-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.skyline {
+    color: #008A67;
+}
+
+.title-graph {
+    text-align: center;
+}
+
+svg {
+    margin: 20px;
 }

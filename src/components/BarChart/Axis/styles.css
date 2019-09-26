@@ -1,8 +1,14 @@
-.Axis-Bottom text {
+.axis path,
+.axis line {
+    stroke: #E0E0E0;
+}
+
+.axis text {
+    font-size: 1.2em;
+    fill: black;
+}
+
+.axis-Bottom text {
     transform: rotate(-45deg);
     text-anchor: end;
-  }
-
-  line {
-    color: rgba(128, 128, 128, 0.452);
-  }
+}

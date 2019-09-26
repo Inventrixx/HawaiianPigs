@@ -1,5 +1,12 @@
+
 body {
+  height: 100%;
   margin: 0;
-  padding: 0;
   font-family: sans-serif;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: -moz-linear-gradient(-45deg,  rgba(0,138,103,1) 0%, rgba(61,0,244,0.89) 11%, rgba(61,0,244,0.82) 18%, rgba(255,255,255,0.65) 35%, rgba(255,255,255,0) 100%);
+  background: -webkit-linear-gradient(-45deg,  rgba(0,138,103,1) 0%,rgba(61,0,244,0.89) 11%,rgba(61,0,244,0.82) 18%,rgba(255,255,255,0.65) 35%,rgba(255,255,255,0) 100%);
+  background: linear-gradient(135deg,  rgba(0,138,103,1) 0%,rgba(61,0,244,0.89) 11%,rgba(61,0,244,0.82) 18%,rgba(255,255,255,0.65) 35%,rgba(255,255,255,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008a67', endColorstr='#00ffffff',GradientType=1 );
 }
