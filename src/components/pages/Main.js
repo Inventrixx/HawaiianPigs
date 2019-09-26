@@ -4,10 +4,11 @@ import pigData from '../../wild-pig-data.json'
 import ProgressBar from '../ProgressBar/ProgressBar'
 import {validateYear, arrYearFiltered, roundNumbers} from '../helpers'
 import * as queryString from 'query-string'
-import './styles/styles.css'
 
+import Container from '@material-ui/core/Container'
+import Button from '../Button/Button';
 import Box from '@material-ui/core/Box';
-
+import './styles/styles.css'
 //constants
 const ADD_ONE_YEAR = 1
 
@@ -34,7 +35,6 @@ class Main extends Component {
             percentPerYear: percentPerYear,
             progress: percentPerYear
         }
-
     }
 
     progressCalculator(selectedYear) {
@@ -48,6 +48,30 @@ class Main extends Component {
         return minYear < selectedYear ? howMuchProgressPercent : progress
     }
 
+    startGraphic = () => progressBarChart = setInterval(() => {this.changeSelectedYear()}, 2000)
+
+    stopGraphic = () => clearInterval(progressBarChart)
+
+    onClickPlayPaused = () => {
+        const {isPaused} = this.state
+     
+        this.setState({isPaused: !isPaused}, () => {
+            this.state.isPaused ? this.startGraphic() : this.stopGraphic()
+        })    
+   }    
+    changeSelectedYear = () => {
+        const {selectedYear, years, minYear, maxYear, progress, percentPerYear} = this.state
+  
+        const indexSelectedYear = years.indexOf(selectedYear) 
+ 
+        if(selectedYear < maxYear) {
+            this.setState({selectedYear: years[indexSelectedYear + ADD_ONE_YEAR], 
+                           progress: progress + percentPerYear}) 
+         } else {
+             this.setState({selectedYear: minYear, isPaused: false, progress: percentPerYear})
+             this.stopGraphic()
+         }                    
+     }
 
     UNSAFE_componentWillMount () {
         //retrieve data from params
@@ -55,10 +79,11 @@ class Main extends Component {
         const {minYear} = this.state
         const {paused, year} = queryString.parse(this.props.location.search)
         const isPaused = paused ? paused === 'true' : false
+
         const yearsFiltered = arrYearFiltered(data)
-        const selectedYear = validateYear(year, minYear)
+
+        const selectedYear = validateYear(year, minYear) // validate params
         const progress = this.progressCalculator(selectedYear)
-        console.log(progress)
 
         this.setState({
             isPaused, 
@@ -75,66 +100,31 @@ class Main extends Component {
           this.startGraphic()
         } 
     }
-
-    startGraphic = () => progressBarChart = setInterval(() => {this.changeSelectedYear()}, 2000)
-
-    stopGraphic = () => clearInterval(progressBarChart)
-
-    changeSelectedYear = () => {
-       const {selectedYear, years, minYear, maxYear, progress, percentPerYear} = this.state
- 
-       const indexSelectedYear = years.indexOf(selectedYear) 
-
-
-       if(selectedYear < maxYear) {
-           this.setState({selectedYear: years[indexSelectedYear + ADD_ONE_YEAR], 
-                          progress: progress + percentPerYear}) 
-        } else {
-            this.setState({selectedYear: minYear, isPaused: false, progress: percentPerYear})
-            this.stopGraphic()
-        }
-                          
-    }
-
-    onClickPaused = () => {
-
-        const {isPaused} = this.state
-     
-        this.setState({isPaused: !isPaused}, () => {
-            this.state.isPaused ? this.startGraphic() : this.stopGraphic()
-        })    
-        
-   }    
-
     render(){
         const {data} = this
         const { isPaused, selectedYear, progress} = this.state
         const yearsTitleToString = String(selectedYear)
         return (
-            <div>
-            <Box display="flex" p={1} justifyContent="center">
-                <div className='main-container'>
-                    <div className='title'>
-                        <h1>{yearsTitleToString}</h1>
-                    </div>
+            <Container className='main-container'maxWidth='md' >
+              <Box bgcolor='white' max-width= 'md'boxShadow={3}>
+                <div className='title'>
+                  <h1>Welcome to my <span className='skyline'>Hawaii Pig Chart!</span></h1>
+                </div>
+                <div className='title-graph'><h3>Years: {yearsTitleToString}</h3></div>
                 <BarChart 
                     {...this.props}
                     data={data} 
                     paused={isPaused}
                     year={selectedYear}
                 />
-                <ProgressBar progress={progress} variant='determinate' />
-                <div className='playPause-container'>
-                    <button onClick={this.onClickPaused}>{!isPaused ? 'Play' : 'Pause'}</button>
-                </div>
-           
-                </div>
-            </Box>
-                
-            </div>
+                 <Box padding='20px' display='flex' justifyContent='center'>
+                    <Button paused={isPaused} onClick={this.onClickPlayPaused} />
+                    <ProgressBar progress={progress} variant='determinate' />       
+                </Box>
+                </Box>  
+            </Container>
         )
-    }
-   
+    }  
 }
 
 export default Main
