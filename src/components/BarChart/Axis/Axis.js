@@ -4,6 +4,7 @@ import { select as d3Select } from 'd3-selection'
 import './styles.css'
 
 export default class Axis extends Component {
+  
   componentDidMount() {
     this.renderAxis()
   }
@@ -26,7 +27,7 @@ export default class Axis extends Component {
   render() {
     return (
       <g
-        className={`Axis Axis-${this.props.orient}`}
+        className={`axis axis-${this.props.orient}`}
         ref={(el) => { this.axisElement = el; }}
         transform={this.props.translate}
       />
