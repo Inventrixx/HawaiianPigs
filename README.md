@@ -1,7 +1,7 @@
 # Hawaii Pig Visualization
 
 Hi there! Welcome to my Pig Visualization project, done with d3.js + React. 
-It was my first time using d3 with react, and after a lot of reading and searching, I made this project based it was better for me and my experience. I'm going to explain a little bit how I did it. 
+It was my first time using d3 with react, and after a lot of reading and searching, I made this project based on what was better for me and my experience. I'm going to explain a little bit how I did it. 
 Hope you'll enjoy it! 
 
 ## Interaction d3 and React 
